@@ -4,9 +4,9 @@
       class="w-full h-full bg-main bg-cover flex items-center opacity-40 shadow-main"
     ></div>
     <div
-      class="fixed top-0 left-0 bottom-0 right-0 w-full h-full flex items-center"
+      class="fixed top-0 left-0 bottom-0 right-0 w-full h-full flex items-center main-sm:justify-start justify-center"
     >
-      <MainContent class="pl-20 text-white"></MainContent>
+      <MainContent class="main-sm:pl-20 text-white"></MainContent>
     </div>
     <div class="fixed bottom-0 left-0 right-0 w-full">
       <MainFooter></MainFooter>

@@ -10,6 +10,7 @@ module.exports = {
   separator: ":",
   theme: {
     screens: {
+      "main-sm": "610px",
       sm: "640px",
       md: "768px",
       lg: "1024px",
@@ -406,6 +407,7 @@ module.exports = {
       "40": "0.40",
       "50": "0.5",
       "75": "0.75",
+      "90": "0.90",
       "100": "1"
     },
     order: {

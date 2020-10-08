@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between text-white pb-2 px-2 items-end">
+  <div class="flex justify-between text-white pb-3 px-3 items-end">
     <div>
       <p class="text-xs">Central, Hong Kong</p>
     </div>
