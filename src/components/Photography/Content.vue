@@ -2,7 +2,7 @@
   <div class="max-w-screen-photography-container mx-auto">
     <h4 class="text-2xl">North America</h4>
 
-    <div id="one" class="mt-5">
+    <div id="one" class="mt-5" @click="$emit('openModal')">
       <img src="@/assets/images/1.jpg" />
       <img src="@/assets/images/2.jpg" />
       <img src="@/assets/images/3.jpg" />
