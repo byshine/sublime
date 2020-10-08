@@ -1,7 +1,15 @@
 <template>
-  <div id="app" class="font-serif w-full h-full bg-primary">
+  <div id="app" class="font-serif w-full h-full">
     <Navigation></Navigation>
-    <router-view />
+    <transition
+      mode="out-in"
+      enter-active-class="translate-performant duration-500 ease-in"
+      leave-active-class="translate-performant duration-500 ease-in"
+      enter-class="opacity-0 transform scale-0"
+      leave-to-class="opacity-0 transform scale-0"
+    >
+      <router-view />
+    </transition>
   </div>
 </template>
 <script>
@@ -21,5 +29,6 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  background-color: #161616;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full">
     <div
-      class="w-full h-full bg-main bg-cover flex items-center opacity-40 shadow-main"
+      class="w-full h-full bg-main bg-cover flex items-center opacity-40 main-sm:shadow-main shadow-main-mobile"
     ></div>
     <div
       class="fixed top-0 left-0 bottom-0 right-0 w-full h-full flex items-center main-sm:justify-start justify-center"

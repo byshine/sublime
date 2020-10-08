@@ -8,7 +8,9 @@
       >
     </p>
     <p class="tracking-widest mt-5 text-lg">Sublime Restoration Project</p>
-    <p class="tracking-widest text-lg">Lookbook</p>
+    <p class="tracking-widest text-lg">
+      <router-link to="/photography">Lookbook</router-link>
+    </p>
   </div>
 </template>
 <script>

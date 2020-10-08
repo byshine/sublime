@@ -1,3 +1,5 @@
+const sidebar = "300px";
+
 module.exports = {
   future: {
     // removeDeprecatedGapUtilities: true,
@@ -14,7 +16,8 @@ module.exports = {
       sm: "640px",
       md: "768px",
       lg: "1024px",
-      xl: "1280px"
+      xl: "1280px",
+      "photography-container": "1600px"
     },
     colors: {
       primary: "#161616",
@@ -324,10 +327,11 @@ module.exports = {
       full: "100%",
       screen: "100vh"
     }),
-    inset: {
+    inset: theme => ({
       "0": "0",
-      auto: "auto"
-    },
+      auto: "auto",
+      ...theme("spacing")
+    }),
     letterSpacing: {
       tighter: "-0.05em",
       tight: "-0.025em",
@@ -360,6 +364,7 @@ module.exports = {
     margin: (theme, { negative }) => ({
       auto: "auto",
       ...theme("spacing"),
+      ...theme("width"),
       ...negative(theme("spacing"))
     }),
     maxHeight: {
@@ -445,6 +450,7 @@ module.exports = {
     textColor: theme => theme("colors"),
     textOpacity: theme => theme("opacity"),
     width: theme => ({
+      sidebar: sidebar,
       auto: "auto",
       ...theme("spacing"),
       "1/2": "50%",
@@ -638,6 +644,7 @@ module.exports = {
     transitionProperty: {
       none: "none",
       all: "all",
+      performant: "opacity, transform",
       default:
         "background-color, border-color, color, fill, stroke, opacity, box-shadow, transform",
       colors: "background-color, border-color, color, fill, stroke",
