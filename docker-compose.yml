@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  web:
+    image: 'node:14'
+    volumes:
+      - ./web:/web
+    working_dir: /web/
+    networks:
+      - back-tier
+
+networks:
+    back-tier:
+        driver: bridge
