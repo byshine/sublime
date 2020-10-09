@@ -15,6 +15,9 @@
       <li>
         <router-link to="/photography">Photography</router-link>
       </li>
+      <li>
+        <router-link to="/collaborate">Collaborate</router-link>
+      </li>
     </ul>
   </div>
 </template>
