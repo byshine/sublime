@@ -8,7 +8,7 @@ services:
       - 8080:8080
 
   backend:
-    command: bash -c "yarn && node index.js"
+    command: bash -c "yarn && yarn dev"
     environment:
       - NODE_ENV=development
     ports:
