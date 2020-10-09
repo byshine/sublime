@@ -8,6 +8,14 @@ services:
     networks:
       - back-tier
 
+  nginx:
+    image: nginx:1.18
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - back-tier
+
 networks:
     back-tier:
         driver: bridge
+
