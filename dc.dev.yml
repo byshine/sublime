@@ -4,6 +4,15 @@ services:
     command: bash -c "yarn && yarn serve"
     environment:
       - NODE_ENV=development
+    ports:
+      - 8080:8080
+
+  backend:
+    command: bash -c "yarn && node index.js"
+    environment:
+      - NODE_ENV=development
+    ports:
+      - 8000:8000
 
   nginx:
     ports:
