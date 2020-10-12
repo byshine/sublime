@@ -8,11 +8,13 @@ services:
     networks:
       - back-tier
 
-  backend:
-    image: 'node:14'
+  firebase:
+    build:
+      context: ./
+      dockerfile: Dockerfile
     volumes:
-      - ./backend:/backend
-    working_dir: /backend/
+      - ./firebase:/firebase
+    working_dir: /firebase/
     networks:
       - back-tier
 

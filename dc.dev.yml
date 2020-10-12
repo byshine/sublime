@@ -5,14 +5,21 @@ services:
     environment:
       - NODE_ENV=development
     ports:
-      - 8080:8080
+      - 3000:3000
 
-  backend:
-    command: bash -c "yarn && yarn dev"
+  firebase:
+    command: sleep 1000000
     environment:
       - NODE_ENV=development
     ports:
-      - 8000:8000
+      - 4000:4000
+      - 4400:4400
+      - 4500:4500
+      - 5001:5001
+      - 5002:5002
+      - 8080:8080
+      - 8085:8085
+      - 9000:9000
     restart:
       always
 
