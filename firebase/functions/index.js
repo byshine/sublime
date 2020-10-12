@@ -14,12 +14,16 @@ app.use(cors({ origin: true }));
 const {Storage} = require('@google-cloud/storage')
 const storage = new Storage();
 const bucket = storage.bucket("classicstyle-2c480.appspot.com")
-
 const Firestore = require('@google-cloud/firestore');
 const firestore = new Firestore({
     projectId: "classicstyle-2c480",
     timestampsInSnapshots: true,
 });
+
+app.get('/photos', async (req, res) => {
+  const photos = await firestore.collection('photos').get()
+  return res.send(photos.docs.map(doc => doc.data()))
+})
 
 app.post('/collaborate', (req, res) => {
 
@@ -73,15 +77,18 @@ app.post('/collaborate', (req, res) => {
         // We still need to wait for the disk writes (saves) to complete.
         busboy.on('finish', async () => {
           await Promise.all(fileWrites);
-      
-          // TODO(developer): Process saved files here
+          console.log("Bucket Finish")
           for (const file in uploads) {
             const filePath = uploads[file].filepath
-            console.log("File Path", filePath)
             const fileName = uploads[file].filename
+            const destPathOriginal = 'images/original/' + fileName
+            const destPathOptimized = 'images/optimized/' + fileName
+            
             bucket.upload(filePath, {
-                destination: 'images/original/' + fileName
+                destination: destPathOriginal
             }).then(result => {
+                console.log("Upload Original Finish")
+                fields.original = result[0].metadata.name
                 return new Promise((resolve, reject) => {
                     gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(80).write(filePath, (err, stdout) => {
                         if (err) {
@@ -93,17 +100,16 @@ app.post('/collaborate', (req, res) => {
                 })
             }).then(() => {
                 return bucket.upload(filePath, {
-                    destination: 'images/optimized/' + fileName
+                    destination: destPathOptimized
                 })
             }).then(result => {
-                console.log("Optimized Result", result[0].metadata)
-                return firestore.collection('Test').doc('rTdl1vV5q9RKMdvNR7rL').set({
-                    city: 'Vancouver'
-                }, { merge: true });
+              console.log("Upload Optimized Finish")
+                fields.optimized = result[0].metadata.name
+                return firestore.collection('photos').add(fields, { merge: true });
             }).then(result => {
-                console.log("Db result", result)
+                return true
             }).catch((e) => {
-                console.error(e)
+                //console.error(e)
             })
             .finally(() => {
                 fs.unlinkSync(filePath);

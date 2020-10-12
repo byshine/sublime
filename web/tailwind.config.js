@@ -26,6 +26,7 @@ module.exports = {
       navigation: "rgba(0,0,0,0.2)",
       black: "#000",
       white: "#fff",
+      "input-bg": "rgba(255,255,255,0.1)",
 
       gray: {
         100: "#f7fafc",

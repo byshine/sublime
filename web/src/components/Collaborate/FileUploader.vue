@@ -9,7 +9,7 @@
       @change="handleFiles"
     />
     <button
-      class="block bg-white text-black py-3 text-center max-w-xl px-10 w-full min-w-xs rounded-lg"
+      class="block bg-input-bg py-3 text-center px-10 w-full text-white text-xs"
       @click="handleUpload"
     >
       <span v-if="file && file.name" class="block normal-case truncate">{{
