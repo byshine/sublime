@@ -1,6 +1,26 @@
 <template>
   <div class="home w-full h-full">
-    <Main></Main>
+    <div
+      v-show="loading"
+      class="w-full h-full flex items-center justify-center"
+    >
+      <div class="relative">
+        <div class="loader bg-loader rounded-full w-loader h-loader"></div>
+        <div
+          class="absolute top-0 left-0 right-0 bottom-0 w-full h-full rounded-full animate-pulseAndScale"
+          style="background-color: rgba(255,255,255,0.3)"
+        ></div>
+      </div>
+    </div>
+    <transition
+      mode="out-in"
+      enter-active-class="translate-performant duration-500 ease-in"
+      leave-active-class="translate-performant duration-500 ease-in"
+      enter-class="opacity-0 transform"
+      leave-to-class="opacity-0 transform"
+    >
+      <Main v-show="!loading" @videoReady="loading = false"></Main>
+    </transition>
   </div>
 </template>
 
@@ -12,5 +32,7 @@ import Main from "@/components/Main.vue";
     Main
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  loading = true;
+}
 </script>

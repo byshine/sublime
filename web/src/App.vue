@@ -5,8 +5,8 @@
       mode="out-in"
       enter-active-class="translate-performant duration-500 ease-in"
       leave-active-class="translate-performant duration-500 ease-in"
-      enter-class="opacity-0 transform scale-0"
-      leave-to-class="opacity-0 transform scale-0"
+      enter-class="opacity-0 transform"
+      leave-to-class="opacity-0 transform"
     >
       <router-view />
     </transition>

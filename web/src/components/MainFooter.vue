@@ -1,8 +1,6 @@
 <template>
   <div class="flex justify-between text-white pb-3 px-3 items-end">
-    <div>
-      <p class="text-xs">Central, Hong Kong</p>
-    </div>
+    <div class="text-left text-xs"></div>
     <div class="text-right text-xs opacity-75">
       <p>dedicated to the one and only</p>
       <p>&#169; Aaron Ahn</p>

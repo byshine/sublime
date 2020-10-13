@@ -23,9 +23,10 @@ module.exports = {
       primary: "#161616",
       transparent: "transparent",
       current: "currentColor",
-      navigation: "rgba(0,0,0,0.2)",
+      navigation: "rgba(0,0,0,0)",
       black: "#000",
       white: "#fff",
+      loader: "rgba(255,255,255,0.2)",
       "input-bg": "rgba(255,255,255,0.1)",
 
       gray: {
@@ -326,7 +327,8 @@ module.exports = {
       auto: "auto",
       ...theme("spacing"),
       full: "100%",
-      screen: "100vh"
+      screen: "100vh",
+      ...theme("width")
     }),
     inset: theme => ({
       "0": "0",
@@ -492,7 +494,8 @@ module.exports = {
       "10/12": "83.333333%",
       "11/12": "91.666667%",
       full: "100%",
-      screen: "100vw"
+      screen: "100vw",
+      loader: "30px"
     }),
     zIndex: {
       auto: "auto",
@@ -695,7 +698,8 @@ module.exports = {
       spin: "spin 1s linear infinite",
       ping: "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
       pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-      bounce: "bounce 1s infinite"
+      bounce: "bounce 1s infinite",
+      pulseAndScale: "pulseAndScale 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
     },
     keyframes: {
       spin: {
@@ -716,6 +720,10 @@ module.exports = {
           transform: "none",
           animationTimingFunction: "cubic-bezier(0,0,0.2,1)"
         }
+      },
+      pulseAndScale: {
+        "0": { transform: "scale(0)" },
+        "50%": { opacity: ".5", transform: "scale(2)" }
       }
     }
   },
