@@ -3,6 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./assets/tailwind.css";
+import axios from "axios";
+
+axios.defaults.baseURL =
+  process.env.NODE_ENV === "production"
+    ? "https://us-central1-classicstyle-2c480.cloudfunctions.net/widgets"
+    : "http://localhost:5001/classicstyle-2c480/us-central1/widgets/";
 
 Vue.config.productionTip = false;
 

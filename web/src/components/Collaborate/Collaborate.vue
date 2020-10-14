@@ -37,7 +37,6 @@
 import { Vue, Component } from "vue-property-decorator";
 import FileUploader from "@/components/Collaborate/FileUploader.vue";
 import { collaborate } from "@/api/index.js";
-const { getNameList } = require("country-list");
 
 @Component({
   components: {
@@ -92,10 +91,6 @@ export default class Collaborate extends Vue {
     collaborate(formData).then(result => {
       console.log("Result", result);
     });
-  }
-
-  mounted() {
-    console.log(getNameList());
   }
 }
 </script>

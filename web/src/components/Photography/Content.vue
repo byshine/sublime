@@ -2,19 +2,22 @@
   <div class="max-w-screen-photography-container mx-auto">
     <h4 class="text-2xl">North America</h4>
 
-    <div id="one" class="mt-5" @click="$emit('openModal')">
-      <img src="@/assets/images/1.jpg" />
-      <img src="@/assets/images/2.jpg" />
-      <img src="@/assets/images/3.jpg" />
-      <img src="@/assets/images/4.jpg" />
+    <div id="one" class="mt-5" @click="handleClick">
+      <img
+        :data-index="index"
+        v-for="(image, index) in images"
+        :key="index"
+        :src="image.url"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
 @Component
 export default class Content extends Vue {
+  @Prop({ default: null, type: Array }) images;
   mounted() {
     window.Macy({
       container: "#one",
@@ -29,6 +32,10 @@ export default class Content extends Vue {
         400: 1
       }
     });
+  }
+
+  handleClick(e) {
+    console.log(e);
   }
 }
 </script>

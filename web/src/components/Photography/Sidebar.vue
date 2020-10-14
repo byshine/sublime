@@ -1,26 +1,27 @@
 <template>
   <div>
     <div>
-      <h6 class="text-lg">North America</h6>
-      <ul class="mt-3">
-        <li>
-          <div class="cursor-pointer">Canada +</div>
-          <div class="ml-4">
-            <div class="cursor-pointer">&middot; Vancouver</div>
-            <div class="cursor-pointer">&middot; Toronto</div>
+      <div
+        class="mb-5"
+        v-for="(countries, continent) in regions"
+        :key="continent"
+      >
+        <h6 class="text-lg">{{ continent }}</h6>
+        <div v-for="(cities, country) in countries" :key="country">
+          <div class="cursor-pointer">{{ country }}</div>
+          <div class="ml-4" v-for="(value, city) in cities" :key="city">
+            &middot; {{ city }}
           </div>
-        </li>
-
-        <li>
-          <div>United States +</div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
 @Component
-export default class Base extends Vue {}
+export default class Sidebar extends Vue {
+  @Prop({ default: null, type: Object }) regions;
+}
 </script>
