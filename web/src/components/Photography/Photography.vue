@@ -1,15 +1,20 @@
 <template>
   <div class="text-white pt-navigation">
     <div
-      class="fixed top-navigation bottom-0 left-0 w-sidebar bg-navigation p-10"
+      class="fixed top-navigation bottom-0 left-0 w-sidebar bg-white p-10 bg-opacity-3"
     >
       <Sidebar :regions="groupedContinents"></Sidebar>
     </div>
-    <div class="ml-sidebar">
-      <Content class="p-10" @openModal="show = true" :images="images"></Content>
+    <div class="ml-sidebar px-10 py-5">
+      <button>Filters</button>
+      <Content @imageClicked="handleImageClicked" :images="images"></Content>
     </div>
 
-    <Modal @closeModal="show = false" :show="show"></Modal>
+    <Modal
+      :image="selectedImage"
+      @closeModal="show = false"
+      :show="show"
+    ></Modal>
   </div>
 </template>
 
@@ -29,9 +34,15 @@ import Modal from "@/components/Photography/Modal.vue";
 })
 export default class Photography extends Vue {
   show = false;
+  selectedImage = null;
 
   mounted() {
     console.log(this.groupedContinents);
+  }
+
+  handleImageClicked(image) {
+    this.selectedImage = image;
+    this.show = true;
   }
 
   get groupedContinents() {

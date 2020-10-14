@@ -12,7 +12,7 @@
     >
       <div class="mt-5">
         <div>
-          <img src="@/assets/images/2.jpg" style="max-height: 60vh;" />
+          <img :src="image.url" style="max-height: 60vh;" />
         </div>
       </div>
 
@@ -48,5 +48,6 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 @Component
 export default class Modal extends Vue {
   @Prop({ default: false, type: Boolean }) show;
+  @Prop({ default: null, type: Object }) image;
 }
 </script>

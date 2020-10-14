@@ -6,13 +6,10 @@
         v-for="(countries, continent) in regions"
         :key="continent"
       >
-        <h6 class="text-lg">{{ continent }}</h6>
-        <div v-for="(cities, country) in countries" :key="country">
-          <div class="cursor-pointer">{{ country }}</div>
-          <div class="ml-4" v-for="(value, city) in cities" :key="city">
-            &middot; {{ city }}
-          </div>
-        </div>
+        <h6 class="text-lg border-b border-white border-opacity-25 mb-3">
+          {{ continent }}
+        </h6>
+        <CountryMenu :countries="countries"></CountryMenu>
       </div>
     </div>
   </div>
@@ -20,7 +17,12 @@
 
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
-@Component
+import CountryMenu from "@/components/Photography/CountryMenu.vue";
+@Component({
+  components: {
+    CountryMenu
+  }
+})
 export default class Sidebar extends Vue {
   @Prop({ default: null, type: Object }) regions;
 }

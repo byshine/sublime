@@ -35,7 +35,8 @@ export default class Content extends Vue {
   }
 
   handleClick(e) {
-    console.log(e);
+    const { index } = e.target.dataset;
+    this.$emit("imageClicked", this.images[index]);
   }
 }
 </script>
