@@ -13,17 +13,25 @@
   </div>
 </template>
 <script>
-import { Vue, Component, namespace } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import Navigation from "@/components/Navigation.vue";
-const appStore = namespace("./store/index.js");
 @Component({
   components: {
     Navigation
   }
 })
 export default class Home extends Vue {
-  mounted() {
-    console.log(appStore);
+  get noScroll() {
+    return this.$store.state.noScroll;
+  }
+
+  @Watch("noScroll")
+  handleNoScroll(nv) {
+    if (nv === true) {
+      document.documentElement.classList.add("overflow-hidden");
+    } else {
+      document.documentElement.classList.remove("overflow-hidden");
+    }
   }
 }
 </script>

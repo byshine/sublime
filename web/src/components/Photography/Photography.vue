@@ -19,12 +19,11 @@
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import Sidebar from "@/components/Photography/Sidebar.vue";
 import Content from "@/components/Photography/Content.vue";
 import Modal from "@/components/Photography/Modal.vue";
 
-//import groupBy from "lodash/groupBy";
 @Component({
   components: {
     Sidebar,
@@ -35,6 +34,15 @@ import Modal from "@/components/Photography/Modal.vue";
 export default class Photography extends Vue {
   show = false;
   selectedImage = null;
+
+  @Watch("show")
+  handleShow(nv) {
+    if (nv === true) {
+      this.$store.commit("setNoScroll", true);
+    } else {
+      this.$store.commit("setNoScroll", false);
+    }
+  }
 
   mounted() {
     console.log(this.groupedContinents);

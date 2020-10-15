@@ -5,9 +5,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    test: "hello"
+    noScroll: false
   },
-  mutations: {},
+  mutations: {
+    setNoScroll(state, ns) {
+      state.noScroll = ns;
+    }
+  },
   actions: {},
   modules: {}
 });
