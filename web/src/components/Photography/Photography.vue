@@ -7,7 +7,11 @@
     </div>
     <div class="ml-sidebar px-10 py-5">
       <button>Filters</button>
-      <Content @imageClicked="handleImageClicked" :images="images"></Content>
+      <Content
+        :regions="groupedContinents"
+        @imageClicked="handleImageClicked"
+        :images="images"
+      ></Content>
     </div>
 
     <Modal

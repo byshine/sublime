@@ -69,7 +69,7 @@ export default class ExpandTransition extends Vue {
 
 .expand-enter-active,
 .expand-leave-active {
-  transition: height 1s ease-in-out;
+  transition: height 0.25s ease-in-out;
   overflow: hidden;
 }
 
