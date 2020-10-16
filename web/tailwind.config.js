@@ -284,7 +284,7 @@ module.exports = {
         '"Noto Color Emoji"'
       ],
       serif: [
-        "Abhaya Libre",
+        "Neuton",
         "Georgia",
         "Cambria",
         '"Times New Roman"',
