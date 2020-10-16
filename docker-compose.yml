@@ -4,6 +4,7 @@ services:
     image: 'node:14'
     volumes:
       - ./web:/web
+      - ./firebase:/firebase
     working_dir: /web/
     networks:
       - back-tier

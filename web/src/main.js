@@ -5,6 +5,7 @@ import store from "./store";
 import "./assets/tailwind.css";
 import axios from "axios";
 
+console.log(process.env.NODE_ENV);
 axios.defaults.baseURL =
   process.env.NODE_ENV === "production"
     ? "https://us-central1-classicstyle-2c480.cloudfunctions.net/widgets"
