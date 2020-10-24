@@ -3,8 +3,10 @@
     <div v-for="(continent, index) in continents" :key="index">
       <h4 class="text-2xl my-5">{{ continent }}</h4>
 
-      <div :id="`macy-${index}`" @click="handleClick">
+      <div :id="`macy-${index}`" @click="handleClick(continent, $event)">
         <img
+          class="cursor-pointer"
+          :data-index="index"
           v-for="(image, index) in filterImages('continent', continent)"
           :key="`${continent}-image-${index}`"
           :src="image.url"
@@ -49,9 +51,10 @@ export default class Content extends Vue {
     });
   }
 
-  handleClick(e) {
+  handleClick(continent, e) {
     const { index } = e.target.dataset;
-    this.$emit("imageClicked", this.images[index]);
+    const filteredImages = this.filterImages("continent", continent);
+    this.$emit("imageClicked", filteredImages[index]);
   }
 }
 </script>

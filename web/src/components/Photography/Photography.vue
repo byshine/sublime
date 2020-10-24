@@ -48,11 +48,24 @@ export default class Photography extends Vue {
     }
   }
 
+  handleKeyDown(event) {
+    if (event.key === "Escape") {
+      this.show = false;
+    }
+  }
+
   mounted() {
-    console.log(this.groupedContinents);
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.handleKeyDown);
   }
 
   handleImageClicked(image) {
+    if (!image) {
+      return;
+    }
     this.selectedImage = image;
     this.show = true;
   }

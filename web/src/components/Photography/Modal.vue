@@ -17,24 +17,18 @@
       </div>
 
       <div class="mt-5 max-w-4xl w-full mx-auto">
-        <div class="px-10 text-center">maybe in time you'll understand</div>
+        <div class="px-10 text-center">
+          {{ description.description }}
+        </div>
         <div class="flex mb-4 text-center flex-wrap mt-10 w-full">
-          <div class="w-1/3">
+          <div
+            class="w-1/3 my-2"
+            v-for="(val, prop) in filteredImage"
+            :key="prop"
+          >
             <div class="inline-block text-left">
-              <div>Photographer</div>
-              <div>Aaron Ahn</div>
-            </div>
-          </div>
-          <div class="w-1/3">
-            <div class="inline-block text-left">
-              <div>Location</div>
-              <div>Vancouver</div>
-            </div>
-          </div>
-          <div class="w-1/3">
-            <div class="inline-block text-left">
-              <div>Camera</div>
-              <div>Sony A7 III</div>
+              <div class="capitalize">{{ prop }}</div>
+              <div>{{ val }}</div>
             </div>
           </div>
         </div>
@@ -45,9 +39,26 @@
 
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
+import pick from "lodash/pick";
 @Component
 export default class Modal extends Vue {
   @Prop({ default: false, type: Boolean }) show;
   @Prop({ default: null, type: Object }) image;
+
+  get filteredImage() {
+    return pick(this.image, [
+      "city",
+      "camera",
+      "continent",
+      "country",
+      "photographer",
+      "lens",
+      "date"
+    ]);
+  }
+
+  get description() {
+    return pick(this.image, "description");
+  }
 }
 </script>
