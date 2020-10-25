@@ -10,6 +10,12 @@
       class="fixed flex-col top-0 left-0 right-0 bottom-0 bg-black w-full h-full flex justify-start items-center z-50 overflow-y-auto"
       @click.self.stop="$emit('closeModal')"
     >
+      <div
+        class="fixed right-0 top-0 pt-2 pr-4 cursor-pointer"
+        @click="$emit('closeModal')"
+      >
+        Close
+      </div>
       <div class="mt-5">
         <div>
           <img :src="image.url" style="max-height: 60vh;" />
@@ -19,6 +25,7 @@
       <div class="mt-5 max-w-4xl w-full mx-auto">
         <div class="px-10 text-center">
           {{ description.description }}
+          <span class="ml-2">{{ date.date }}</span>
         </div>
         <div class="flex mb-4 text-center flex-wrap mt-10 w-full">
           <div
@@ -26,7 +33,7 @@
             v-for="(val, prop) in filteredImage"
             :key="prop"
           >
-            <div class="inline-block text-left">
+            <div>
               <div class="capitalize">{{ prop }}</div>
               <div>{{ val }}</div>
             </div>
@@ -52,13 +59,16 @@ export default class Modal extends Vue {
       "continent",
       "country",
       "photographer",
-      "lens",
-      "date"
+      "lens"
     ]);
   }
 
   get description() {
     return pick(this.image, "description");
+  }
+
+  get date() {
+    return pick(this.image, "date");
   }
 }
 </script>

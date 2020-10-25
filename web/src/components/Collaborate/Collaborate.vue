@@ -86,6 +86,7 @@ export default class Collaborate extends Vue {
     console.log(this.file);
 
     const formData = new FormData();
+    formData.append("file", this.file);
     this.form.map(f => formData.append(f.value, f.model));
 
     collaborate(formData).then(result => {
