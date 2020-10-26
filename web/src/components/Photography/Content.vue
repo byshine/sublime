@@ -39,7 +39,7 @@ export default class Content extends Vue {
         trueOrder: false,
         waitForImages: false,
         margin: 6,
-        columns: 4,
+        columns: 3,
         breakAt: {
           1200: 3,
           940: 2,

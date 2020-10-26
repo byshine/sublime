@@ -30,25 +30,18 @@ app.post('/collaborate', (req, res) => {
         const busboy = new Busboy({headers: req.headers});
         const tmpdir = os.tmpdir();
       
-        // This object will accumulate all the fields, keyed by their name
         const fields = {};
-      
-        // This object will accumulate all the uploaded files, keyed by their name.
+  
         const uploads = {};
-      
-        // This code will process each non-file field in the form.
+    
         busboy.on('field', (fieldname, val) => {
-          // TODO(developer): Process submitted field values here
           console.log(`Processed field ${fieldname}: ${val}.`);
           fields[fieldname] = val;
         });
       
         const fileWrites = [];
       
-        // This code will process each file uploaded.
         busboy.on('file', (fieldname, file, filename) => {
-          // Note: os.tmpdir() points to an in-memory file system on GCF
-          // Thus, any files in it must fit in the instance's memory.
           console.log(`Processed file ${filename}`);
           const filepath = path.join(tmpdir, filename);
           uploads[fieldname] = {
@@ -77,44 +70,49 @@ app.post('/collaborate', (req, res) => {
         // We still need to wait for the disk writes (saves) to complete.
         busboy.on('finish', async () => {
           await Promise.all(fileWrites);
-          console.log("Bucket Finish")
           for (const file in uploads) {
             const filePath = uploads[file].filepath
             const fileName = uploads[file].filename
             const destPathOriginal = 'images/original/' + fileName
             const destPathOptimized = 'images/optimized/' + fileName
+
+            const filepaths = [
+              filePath,
+              filePath.replace(/(\.[\w\d_-]+)$/i, '_small$1'),
+              filePath.replace(/(\.[\w\d_-]+)$/i, '_medium$1'),
+              filePath.replace(/(\.[\w\d_-]+)$/i, '_large$1')
+            ]
+
+            try {
             
-            bucket.upload(filePath, {
-                destination: destPathOriginal
-            }).then(result => {
-                console.log("Upload Original Finish")
-                fields.original = result[0].metadata.name
-                return new Promise((resolve, reject) => {
-                    gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(80).write(filePath, (err, stdout) => {
-                        if (err) {
-                          reject(err);
-                        } else {
-                          resolve(stdout);
-                        }
-                    });
-                })
-            }).then(() => {
-                return bucket.upload(filePath, {
-                    destination: destPathOptimized
-                })
-            }).then(result => {
-              console.log("Upload Optimized Finish")
-                fields.optimized = result[0].metadata.name
-                return firestore.collection('photos').add(fields, { merge: true });
-            }).then(result => {
-                return true
-            }).catch((e) => {
-                //console.error(e)
-            })
-            .finally(() => {
-                fs.unlinkSync(filePath);
-            })
-         
+              await Promise.all([
+                optimizeImage(filePath, filepaths[1], 416),
+                optimizeImage(filePath, filepaths[2], 600),
+                optimizeImage(filePath, filepaths[3], 800)
+              ])
+
+              const uploadResults = await Promise.all([
+                bucket.upload(filepaths[0]),
+                bucket.upload(filepaths[1]),
+                bucket.upload(filepaths[2]),
+                bucket.upload(filepaths[3])
+              ])
+
+              fields.original = uploadResults[0][1].name
+              fields.small = uploadResults[1][1].name
+              fields.medium = uploadResults[2][1].name
+              fields.large = uploadResults[3][1].name
+
+              await firestore.collection('photos').add(fields, { merge: true });
+
+            } catch(e) {
+              console.error(e)
+            } finally {
+              filepaths.map(fp => {
+                fs.unlinkSync(fp);
+              })
+            }
+
           res.send();
         }});
         busboy.end(req.rawBody);
@@ -127,3 +125,27 @@ exports.widgets = functions.https.onRequest(app);
 
 //exports.collaborate = functions.https.onRequest(app);
 
+
+function optimizeImage(filePath, newfilePath, resize) {
+  if (!resize) {
+    return new Promise((resolve, reject) => {
+      gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(80)
+      write(newfilePath, (err, stdout) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(stdout);
+          }
+      })});
+  } else {
+    return new Promise((resolve, reject) => {
+      gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(80).resize(resize || 600).
+      write(newfilePath, (err, stdout) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(stdout);
+          }
+      })});
+  }
+}
