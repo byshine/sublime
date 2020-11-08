@@ -6,7 +6,7 @@
         v-for="(countries, continent) in regions"
         :key="continent"
       >
-        <h6 class="text-lg border-b border-white border-opacity-25 mb-3">
+        <h6 class="text-2xl border-b border-white border-opacity-25 mb-3">
           {{ continent }}
         </h6>
         <CountryMenu :countries="countries"></CountryMenu>

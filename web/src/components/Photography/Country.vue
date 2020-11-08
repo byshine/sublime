@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="cursor-pointer" @click="open = !open">
+    <div class="cursor-pointer text-lg" @click="open = !open">
       {{ country }} {{ statusIcon }}
     </div>
     <ExpandTransition>

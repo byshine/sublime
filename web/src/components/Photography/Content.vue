@@ -9,7 +9,7 @@
           :data-index="index"
           v-for="(image, index) in filterImages('continent', continent)"
           :key="`${continent}-image-${index}`"
-          :src="image.url"
+          :src="getImageUrl(image.small)"
         />
       </div>
     </div>
@@ -25,6 +25,10 @@ export default class Content extends Vue {
 
   get continents() {
     return Object.keys(this.regions);
+  }
+
+  getImageUrl(imagePath) {
+    return `https://storage.googleapis.com/classicstyle-2c480.appspot.com/${imagePath}`;
   }
 
   filterImages(field, value) {
@@ -54,6 +58,7 @@ export default class Content extends Vue {
   handleClick(continent, e) {
     const { index } = e.target.dataset;
     const filteredImages = this.filterImages("continent", continent);
+    console.log(filteredImages[index]);
     this.$emit("imageClicked", filteredImages[index]);
   }
 }

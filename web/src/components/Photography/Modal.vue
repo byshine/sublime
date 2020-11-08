@@ -18,7 +18,7 @@
       </div>
       <div class="mt-5">
         <div>
-          <img :src="image.url" style="max-height: 60vh;" />
+          <img :src="getImageUrl(image.large)" style="max-height: 60vh;" />
         </div>
       </div>
 
@@ -61,6 +61,10 @@ export default class Modal extends Vue {
       "photographer",
       "lens"
     ]);
+  }
+
+  getImageUrl(imagePath) {
+    return `https://storage.googleapis.com/classicstyle-2c480.appspot.com/${imagePath}`;
   }
 
   get description() {
