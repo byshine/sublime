@@ -1,15 +1,16 @@
 <template>
   <div class="max-w-screen-photography-container mx-auto">
-    <div v-for="(continent, index) in continents" :key="index">
-      <h4 class="text-2xl my-5">{{ continent }}</h4>
-
-      <div :id="`macy-${index}`" @click="handleClick(continent, $event)">
+    <div id="macy">
+      <div
+        class="inline-block m-2 imageContainer"
+        v-for="(image, index) in images"
+        :key="index"
+        @click="handleClick(index, $event)"
+      >
         <img
-          class="cursor-pointer"
+          class="cursor-pointer inline-block rounded-lg"
           :data-index="index"
-          v-for="(image, index) in filterImages('continent', continent)"
-          :key="`${continent}-image-${index}`"
-          :src="getImageUrl(image.small)"
+          :src="getImageUrl(image.large)"
         />
       </div>
     </div>
@@ -36,22 +37,20 @@ export default class Content extends Vue {
   }
 
   mounted() {
-    let index = 0;
+    console.log(this.images);
     this.continents.map(() => {
       window.Macy({
-        container: `#macy-${index}`,
+        container: `#macy`,
         trueOrder: false,
         waitForImages: false,
-        margin: 6,
-        columns: 3,
+        columns: 4,
         breakAt: {
-          1200: 3,
-          940: 2,
-          520: 1,
+          1200: 4,
+          940: 3,
+          520: 2,
           400: 1
         }
       });
-      index++;
     });
   }
 
@@ -63,3 +62,8 @@ export default class Content extends Vue {
   }
 }
 </script>
+<style scoped>
+.imageContainer {
+  width: calc(25% - 1rem);
+}
+</style>

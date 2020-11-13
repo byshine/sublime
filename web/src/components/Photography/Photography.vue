@@ -1,12 +1,14 @@
 <template>
   <div class="text-white pt-navigation">
+    <!--
     <div
       class="fixed top-navigation bottom-0 left-0 w-sidebar bg-white p-10 bg-opacity-3"
     >
+      
       <Sidebar :regions="groupedContinents"></Sidebar>
     </div>
-    <div class="ml-sidebar px-10 py-5">
-      <button>Filters</button>
+    -->
+    <div class="px-10 py-5">
       <Content
         :regions="groupedContinents"
         @imageClicked="handleImageClicked"

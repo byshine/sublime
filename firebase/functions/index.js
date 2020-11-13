@@ -129,7 +129,7 @@ exports.widgets = functions.https.onRequest(app);
 function optimizeImage(filePath, newfilePath, resize) {
   if (!resize) {
     return new Promise((resolve, reject) => {
-      gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(80)
+      gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(100)
       write(newfilePath, (err, stdout) => {
           if (err) {
             reject(err);
@@ -139,7 +139,7 @@ function optimizeImage(filePath, newfilePath, resize) {
       })});
   } else {
     return new Promise((resolve, reject) => {
-      gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(80).resize(resize || 600).
+      gm(filePath).strip().interlace('Plane').gaussian('0.05').quality(100).resize(resize || 600).
       write(newfilePath, (err, stdout) => {
           if (err) {
             reject(err);

@@ -1,5 +1,6 @@
 <template>
-  <div class="text-white p-10">
+  <div class="text-white p-10 flex justify-center flex-col items-center">
+    <!--
     <div class="max-w-xl mx-auto flex flex-col items-center">
       <div class="w-full flex flex-wrap -mx-1">
         <div class="w-full sm:w-full md:w-full lg:w-full xl:w-full mb-5 px-1">
@@ -45,6 +46,18 @@
       >
         Collaborate
       </button>
+       
+      
+    </div>
+     -->
+    <SublimeUploader
+      class="mt-10"
+      @fileChange="handleFileChange"
+    ></SublimeUploader>
+    <div>
+      <div v-for="(file, index) in files" :key="index">
+        {{ file.name }}
+      </div>
     </div>
   </div>
 </template>
@@ -52,18 +65,22 @@
 <script>
 import { Vue, Component } from "vue-property-decorator";
 import FileUploader from "@/components/Collaborate/FileUploader.vue";
+import SublimeUploader from "@/components/SublimeUploader.vue";
+
 import { collaborate } from "@/api/index.js";
 const countryList = require("countries-list");
 
 @Component({
   components: {
-    FileUploader
+    FileUploader,
+    SublimeUploader
   }
 })
 export default class Collaborate extends Vue {
-  file = null;
-  fileChange(file) {
-    this.file = file;
+  files = null;
+
+  handleFileChange(files) {
+    this.files = files;
   }
 
   get countries() {
