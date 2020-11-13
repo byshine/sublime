@@ -1,79 +1,54 @@
 <template>
   <div class="text-white p-10 flex justify-center flex-col items-center">
-    <!--
-    <div class="max-w-xl mx-auto flex flex-col items-center">
-      <div class="w-full flex flex-wrap -mx-1">
-        <div class="w-full sm:w-full md:w-full lg:w-full xl:w-full mb-5 px-1">
-          <FileUploader @fileChange="fileChange"></FileUploader>
+    <transition
+      enter-active-class="translate-opacity duration-200 ease-in"
+      leave-active-class="translate-opacity duration-200 ease-in"
+      enter-class="opacity-0"
+      leave-to-class="opacity-0"
+      mode="out-in"
+    >
+      <SublimeUploader
+        v-if="!files"
+        class="mt-10"
+        @fileChange="handleFileChange"
+      ></SublimeUploader>
+      <div class="mt-10 w-full" style="max-width: 1280px;" v-else>
+        <div class="flex justify-center">
+          <button @click="files = null">Back</button>
         </div>
-      </div>
-
-      <div class="w-full flex flex-wrap -mx-1">
         <div
-          v-for="(f, index) in form"
-          :key="index"
-          class="w-full sm:w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-1 mb-2"
+          class="w-full grid my-10 justify-items-center"
+          :class="{
+            'sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1':
+              files.length === 1,
+            'sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2':
+              files.length === 2,
+            'sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3':
+              files.length > 3
+          }"
         >
-          <select
-            v-model="f.model"
-            v-if="f.value === 'country'"
-            class="w-full block bg-input-bg py-3 px-5 text-white placeholder-white uppercase text-xs tracking-widest appearance-none
-            "
-          >
-            <option value="placeholder">Country</option>
-            <option
-              class="text-black "
-              v-for="country in countries"
-              :key="country.name"
-              :value="country.name"
-              >{{ country.name }}</option
-            >
-          </select>
-          <input
-            v-else
-            v-model="f.model"
-            name="Text"
-            class="w-full block bg-input-bg py-3 px-5 text-white placeholder-white uppercase text-xs tracking-widest"
-            type="text"
-            :placeholder="f.placeholder"
-          />
+          <div v-for="(file, index) in files" :key="index">
+            <UploadCard ref="uploadCard" class="m-2" :file="file"></UploadCard>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button @click="submitRequest">Submit</button>
         </div>
       </div>
-
-      <button
-        class="mt-10 bg-primary text-white tracking-widest uppercase border-2 border-solid border-white min-w-xs w-full max-w-xs py-2"
-        @click="submitRequest"
-      >
-        Collaborate
-      </button>
-       
-      
-    </div>
-     -->
-    <SublimeUploader
-      class="mt-10"
-      @fileChange="handleFileChange"
-    ></SublimeUploader>
-    <div>
-      <div v-for="(file, index) in files" :key="index">
-        {{ file.name }}
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { Vue, Component } from "vue-property-decorator";
-import FileUploader from "@/components/Collaborate/FileUploader.vue";
 import SublimeUploader from "@/components/SublimeUploader.vue";
-
+import UploadCard from "@/components/UploadCard.vue";
 import { collaborate } from "@/api/index.js";
-const countryList = require("countries-list");
 
 @Component({
   components: {
-    FileUploader,
-    SublimeUploader
+    SublimeUploader,
+    UploadCard
   }
 })
 export default class Collaborate extends Vue {
@@ -83,60 +58,18 @@ export default class Collaborate extends Vue {
     this.files = files;
   }
 
-  get countries() {
-    return Object.values(countryList.countries);
-  }
-
-  mounted() {
-    console.log(countryList);
-  }
-
-  getContinent(countryName) {
-    const temp = this.countries.find(c => c.name === countryName);
-    if (!temp) {
-      return null;
-    }
-
-    const continents = countryList.continents;
-    return continents[temp.continent];
-  }
-
-  form = [
-    {
-      placeholder: "Photographer *",
-      value: "photographer",
-      model: null
-    },
-    {
-      placeholder: "Country *",
-      value: "country",
-      model: "placeholder"
-    },
-    {
-      placeholder: "City",
-      value: "city",
-      model: null
-    },
-    {
-      placeholder: "Date",
-      value: "date",
-      model: null
-    },
-    {
-      placeholder: "Camera",
-      value: "camera",
-      model: null
-    },
-    {
-      placeholder: "Lens",
-      value: "description",
-      model: null
-    }
-  ];
-
   submitRequest() {
-    console.log(this.file);
+    const uploadCards = this.$refs.uploadCard;
+    const requests = [];
+    for (let i = 0; i < uploadCards.length; i++) {
+      const formData = new FormData();
+      formData.append("file", this.files[i]);
+      const form = uploadCards[i].getData();
+      form.map(f => formData.append(f.value, f.model));
+      requests.push(collaborate(formData));
+    }
 
+    /*
     const formData = new FormData();
     formData.append("file", this.file);
     this.form.map(f => formData.append(f.value, f.model));
@@ -149,6 +82,7 @@ export default class Collaborate extends Vue {
     collaborate(formData).then(result => {
       console.log("Result", result);
     });
+    */
   }
 }
 </script>

@@ -28,6 +28,9 @@ module.exports = {
       white: "#fff",
       loader: "rgba(255,255,255,0.2)",
       "input-bg": "rgba(255,255,255,0.1)",
+      "input-bg-dark": "rgba(255,255,255,0.025)",
+      "black-shade": "rgba(0,0,0,0.1)",
+      "white-shade": "rgba(255,255,255,0.1)",
 
       gray: {
         100: "#f7fafc",
@@ -328,6 +331,7 @@ module.exports = {
       ...theme("spacing"),
       full: "100%",
       screen: "100vh",
+      preview: "30vh",
       ...theme("width")
     }),
     inset: theme => ({
@@ -372,7 +376,8 @@ module.exports = {
     }),
     maxHeight: {
       full: "100%",
-      screen: "100vh"
+      screen: "100vh",
+      preview: "30vh"
     },
     maxWidth: (theme, { breakpoints }) => ({
       none: "none",
