@@ -1,5 +1,8 @@
 <template>
   <div class="w-full h-full">
+    <div v-show="!ready" class="flex h-full justify-center items-center">
+      <MainLightLoader></MainLightLoader>
+    </div>
     <transition
       mode="out-in"
       enter-active-class="translate-performant duration-500 ease-in"
@@ -7,10 +10,7 @@
       enter-class="opacity-0 transform"
       leave-to-class="opacity-0 transform"
     >
-      <div v-if="loading" class="flex h-full justify-center items-center">
-        <MainLightLoader @loaded="loading = false"></MainLightLoader>
-      </div>
-      <MainLight v-else></MainLight>
+      <MainLight v-show="ready"></MainLight>
     </transition>
     <!--
     <div
@@ -52,5 +52,9 @@ import MainLight from "@/components/MainLight.vue";
 })
 export default class Home extends Vue {
   loading = true;
+
+  get ready() {
+    return this.$store.state.videoReady;
+  }
 }
 </script>

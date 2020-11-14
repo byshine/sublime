@@ -7,8 +7,11 @@
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/about">About</router-link></li>
       <li><router-link to="/gallery">Gallery</router-link></li>
-      <li>Close</li>
     </ul>
+
+    <div class="absolute right-5 top-5 cursor-pointer" @click="$emit('close')">
+      Close
+    </div>
   </div>
 </template>
 

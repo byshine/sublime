@@ -29,7 +29,7 @@ import MenuOverlay from "@/components/MenuOverlay.vue";
   }
 })
 export default class Home extends Vue {
-  menu = true;
+  menu = false;
   open = true;
   get noScroll() {
     return this.$store.state.noScroll;

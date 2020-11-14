@@ -8,6 +8,7 @@
         loop
         playsinline
         class="w-full h-full object-cover"
+        @canplaythrough="handleCanPlayThrough"
       >
         <source :src="video" />
       </video>
@@ -37,9 +38,13 @@ import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class MainLight extends Vue {
   video = null;
-  mounted() {
+  created() {
     const video = require("@/assets/2.mp4");
     this.video = video;
+  }
+
+  handleCanPlayThrough() {
+    this.$store.commit("setVideoReady", true);
   }
 }
 </script>
