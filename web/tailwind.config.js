@@ -14,10 +14,11 @@ module.exports = {
     screens: {
       "main-sm": "610px",
       sm: "640px",
-      md: "768px",
+      md: "801px",
       lg: "1024px",
       xl: "1280px",
-      "photography-container": "1600px"
+      "photography-container": "1600px",
+      nav: "1200px"
     },
     colors: {
       primary: "#161616",
@@ -335,7 +336,8 @@ module.exports = {
       full: "100%",
       screen: "100vh",
       preview: "30vh",
-      ...theme("width")
+      ...theme("width"),
+      navigation: "60px"
     }),
     inset: theme => ({
       "0": "0",

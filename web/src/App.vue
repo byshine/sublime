@@ -2,9 +2,10 @@
   <div
     id="app"
     class="font-serif w-full h-full"
-    :class="{ 'pl-sidebar': open }"
+    :class="{ 'nav:pl-sidebar': open }"
   >
-    <Navigation></Navigation>
+    <Navigation @openMenu="menu = true"></Navigation>
+    <MenuOverlay @close="menu = false" :menu="menu"></MenuOverlay>
     <transition
       mode="out-in"
       enter-active-class="translate-performant duration-500 ease-in"
@@ -19,12 +20,16 @@
 <script>
 import { Vue, Component, Watch } from "vue-property-decorator";
 import Navigation from "@/components/Navigation.vue";
+import MenuOverlay from "@/components/MenuOverlay.vue";
+
 @Component({
   components: {
-    Navigation
+    Navigation,
+    MenuOverlay
   }
 })
 export default class Home extends Vue {
+  menu = true;
   open = true;
   get noScroll() {
     return this.$store.state.noScroll;

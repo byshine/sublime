@@ -1,6 +1,6 @@
 <template>
-  <div class="p-20 w-full h-full  text-font-main font-serif relative">
-    <div class="absolute top-0 left-0 right-0 bottom-0">
+  <div class="w-full h-full font-serif relative pt-navigation nav:pt-0">
+    <div class="fixed top-0 left-0 right-0 bottom-0">
       <video
         preload="auto"
         muted
@@ -12,11 +12,11 @@
         <source :src="video" />
       </video>
     </div>
-    <div class="flex justify-center items-center w-full h-full">
-      <blockquote
-        class="max-w-sidebar w-full max-w-3xl relative p-10 rounded-lg text-white"
-      >
-        <p class="text-lg">
+    <div
+      class="flex justify-center items-center w-full h-full flex-col text-font-main relative z-30 p-10"
+    >
+      <blockquote class="w-full max-w-3xl relative rounded-lg text-white">
+        <p class="md:text-lg sm:text-md">
           Don't hope for better, Just be better <br />
           Be something better. Be more compassionate, more resilient, more
           humble, more disciplined. <br />
@@ -25,16 +25,9 @@
           And maybe if we're lucky, one day we'll get to be more than human.<br />
         </p>
         <footer class="float-right mt-5">
-          - Mark Manson, <cite>Everything is f**cked</cite>
+          - <cite>Everything is f**cked</cite>
         </footer>
       </blockquote>
-      <ul class="mt-20 clear-both">
-        <li>
-          <button>
-            <router-link to="/gallery">&middot; View Gallery</router-link>
-          </button>
-        </li>
-      </ul>
     </div>
   </div>
 </template>

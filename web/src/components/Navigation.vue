@@ -1,14 +1,20 @@
 <template>
   <div
-    class="fixed top-0 left-0 bottom-0 w-sidebar"
-    style="border-right: 1px solid rgba(0,0,0,0.1)"
+    class="nav:fixed nav:top-0 nav:left-0 nav:bottom-0 nav:w-sidebar flex items-center nav:justify-center nav:h-full fixed top-0 left-0 right-0 bg-white h-navigation z-40"
+    style="border-right: 1px solid rgba(0,0,0,0.1);"
   >
-    <div class="p-10">
-      <h1 class="font-cursive text-2xl tracking-wide text-center">
+    <div
+      class="px-5 nav:p-10 flex justify-between w-full items-center nav:flex-col"
+    >
+      <h1 class="font-cursive text-2xl tracking-wide text-left nav:text-center">
         <router-link to="/">classicstyle</router-link>
       </h1>
+      <Hamburger
+        class="nav:hidden block cursor-pointer"
+        @click.native="$emit('openMenu')"
+      ></Hamburger>
 
-      <ul class="mt-10">
+      <ul class="nav:mt-10 hidden nav:block">
         <li>
           <router-link to="/">Home</router-link>
         </li>
@@ -33,7 +39,5 @@ import MainMenu from "@/components/MainMenu.vue";
     MainMenu
   }
 })
-export default class Navigation extends Vue {
-  menu = false;
-}
+export default class Navigation extends Vue {}
 </script>

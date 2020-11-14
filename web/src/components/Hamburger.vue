@@ -19,7 +19,7 @@ export default class Hamburger extends Vue {}
   margin: 0.15em 0;
   height: 2px;
   width: 23px;
-  background-color: white;
+  background-color: black;
 }
 
 .hamburger > div:nth-of-type(2) {
