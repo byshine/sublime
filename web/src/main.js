@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 import "./assets/tailwind.css";
 import axios from "axios";
-
+require("object-fit-polyfill");
 console.log(process.env.NODE_ENV);
 axios.defaults.baseURL =
   process.env.NODE_ENV === "production"
