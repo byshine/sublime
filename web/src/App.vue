@@ -1,5 +1,9 @@
 <template>
-  <div id="app" class="font-serif w-full h-full">
+  <div
+    id="app"
+    class="font-serif w-full h-full"
+    :class="{ 'pl-sidebar': open }"
+  >
     <Navigation></Navigation>
     <transition
       mode="out-in"
@@ -21,6 +25,7 @@ import Navigation from "@/components/Navigation.vue";
   }
 })
 export default class Home extends Vue {
+  open = true;
   get noScroll() {
     return this.$store.state.noScroll;
   }
@@ -42,6 +47,6 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  background-color: #161616;
+  background-color: white;
 }
 </style>

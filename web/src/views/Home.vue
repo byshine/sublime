@@ -1,5 +1,18 @@
 <template>
-  <div class="home w-full h-full">
+  <div class="w-full h-full">
+    <transition
+      mode="out-in"
+      enter-active-class="translate-performant duration-500 ease-in"
+      leave-active-class="translate-performant duration-500 ease-in"
+      enter-class="opacity-0 transform"
+      leave-to-class="opacity-0 transform"
+    >
+      <div v-if="loading" class="flex h-full justify-center items-center">
+        <MainLightLoader @loaded="loading = false"></MainLightLoader>
+      </div>
+      <MainLight v-else></MainLight>
+    </transition>
+    <!--
     <div
       v-show="loading"
       class="w-full h-full flex items-center justify-center"
@@ -21,15 +34,20 @@
     >
       <Main v-show="!loading" @videoReady="loading = false"></Main>
     </transition>
+    -->
   </div>
 </template>
 
 <script>
 import { Vue, Component } from "vue-property-decorator";
 import Main from "@/components/Main.vue";
+import MainLightLoader from "@/components/MainLightLoader.vue";
+import MainLight from "@/components/MainLight.vue";
 @Component({
   components: {
-    Main
+    Main,
+    MainLight,
+    MainLightLoader
   }
 })
 export default class Home extends Vue {
