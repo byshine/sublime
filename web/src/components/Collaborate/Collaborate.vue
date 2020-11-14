@@ -1,5 +1,6 @@
 <template>
   <div class="text-white p-10 flex justify-center flex-col items-center">
+    <button @click="handleAuth">Sign in</button>
     <transition
       enter-active-class="translate-opacity duration-200 ease-in"
       leave-active-class="translate-opacity duration-200 ease-in"
@@ -44,6 +45,8 @@ import { Vue, Component } from "vue-property-decorator";
 import SublimeUploader from "@/components/SublimeUploader.vue";
 import UploadCard from "@/components/UploadCard.vue";
 import { collaborate } from "@/api/index.js";
+const firebase = require("firebase/app");
+const firebaseui = require("firebaseui");
 
 @Component({
   components: {
@@ -56,6 +59,12 @@ export default class Collaborate extends Vue {
 
   handleFileChange(files) {
     this.files = files;
+  }
+
+  handleAuth() {
+    console.log(firebase.default.initializeApp());
+    const ui = new firebaseui.auth.AuthUI(firebase.default.auth());
+    console.log(ui);
   }
 
   submitRequest() {

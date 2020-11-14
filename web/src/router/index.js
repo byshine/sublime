@@ -21,6 +21,12 @@ const routes = [
     name: "Collaborate",
     component: () =>
       import(/* webpackChunkName: "collaborate" */ "../views/Collaborate.vue")
+  },
+  {
+    path: "/About",
+    name: "About",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/About.vue")
   }
 ];
 

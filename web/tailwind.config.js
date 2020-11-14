@@ -26,11 +26,12 @@ module.exports = {
       navigation: "rgba(0,0,0,0)",
       black: "#000",
       white: "#fff",
-      loader: "rgba(255,255,255,0.2)",
+      loader: "rgba(0,0,0,0.1)",
       "input-bg": "rgba(255,255,255,0.1)",
       "input-bg-dark": "rgba(255,255,255,0.025)",
       "black-shade": "rgba(0,0,0,0.1)",
       "white-shade": "rgba(255,255,255,0.1)",
+      "font-main": "#434343",
 
       gray: {
         100: "#f7fafc",
@@ -163,11 +164,12 @@ module.exports = {
       "48": "12rem",
       "56": "14rem",
       "64": "16rem",
-      navigation: "60px"
+      navigation: "60px",
+      sidebar: sidebar
     },
     backgroundColor: theme => theme("colors"),
     backgroundImage: {
-      main: "url('/bg.jpg')",
+      main: "url('/main-bg.jpg')",
       none: "none",
       "gradient-to-t": "linear-gradient(to top, var(--gradient-color-stops))",
       "gradient-to-tr":
@@ -287,6 +289,7 @@ module.exports = {
         '"Noto Color Emoji"'
       ],
       serif: [
+        "Gilda Display",
         "Amiri",
         "Georgia",
         "Cambria",
@@ -504,7 +507,7 @@ module.exports = {
       "11/12": "91.666667%",
       full: "100%",
       screen: "100vw",
-      loader: "30px"
+      loader: "20px"
     }),
     zIndex: {
       auto: "auto",
