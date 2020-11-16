@@ -6,7 +6,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     videoReady: false,
-    noScroll: false
+    noScroll: false,
+    user: null,
+    validated: false
   },
   mutations: {
     setNoScroll(state, ns) {
@@ -14,8 +16,23 @@ export default new Vuex.Store({
     },
     setVideoReady(state, vr) {
       state.videoReady = vr;
+    },
+    setUser(state, user) {
+      state.user = user;
+    },
+    setValidated(state, validated) {
+      state.validated = validated;
     }
   },
-  actions: {},
+  actions: {
+    validateUser({ commit }, user) {
+      commit("setUser", user);
+      if (user && user.email === "eusahn@gmail.com") {
+        commit("setValidated", true);
+      } else {
+        commit("setValidated", false);
+      }
+    }
+  },
   modules: {}
 });

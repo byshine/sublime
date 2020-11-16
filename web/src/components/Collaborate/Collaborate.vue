@@ -1,8 +1,17 @@
 <template>
-  <div class="text-black p-10 flex justify-center flex-col items-center">
-    <button @click="handleAuth">Sign In</button>
-    <div id="firebaseui-auth-container"></div>
+  <div
+    class="text-black p-10 flex justify-center flex-col items-center h-full w-full"
+  >
+    <button v-if="user" @click="signOut">Sign Out</button>
+    <button v-else @click="handleAuth('google')">
+      Sign In With Google
+    </button>
+    <div class="mt-5" v-if="user && !validated">
+      Thanks for joining the team. Please allow time for approval.
+    </div>
+
     <transition
+      v-if="validated"
       enter-active-class="translate-opacity duration-200 ease-in"
       leave-active-class="translate-opacity duration-200 ease-in"
       enter-class="opacity-0"
@@ -47,7 +56,8 @@ import SublimeUploader from "@/components/SublimeUploader.vue";
 import UploadCard from "@/components/UploadCard.vue";
 import { collaborate } from "@/api/index.js";
 import firebase from "firebase/app";
-const firebaseui = require("firebaseui");
+import "firebase/auth";
+//const firebaseui = require("firebaseui");
 var firebaseConfig = {
   apiKey: "AIzaSyBO0mtp0C1WK1NDo98Ukze4akwaZTL0pYI",
   authDomain: "classicstyle-2c480.firebaseapp.com",
@@ -63,28 +73,36 @@ var firebaseConfig = {
 export default class Collaborate extends Vue {
   files = null;
 
-  created() {
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().onAuthStateChanged(function(user) {
+  signOut() {
+    return firebase.auth().signOut();
+  }
+
+  mounted() {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log("User found", user);
+        this.$store.dispatch("validateUser", user);
       } else {
-        console.log("User Not Found");
+        this.$store.dispatch("validateUser", null);
       }
     });
   }
 
-  handleAuth() {
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    var uiConfig = {
-      signInSuccessUrl: "/collaborate",
-      signInOptions: [
-        // Leave the lines as is for the providers you want to offer your users.
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID
-      ],
-      signInFlow: "popup"
+  get user() {
+    return this.$store.state.user;
+  }
+
+  get validated() {
+    return this.$store.state.validated;
+  }
+
+  handleAuth(provider) {
+    const providers = {
+      google: new firebase.auth.GoogleAuthProvider()
     };
-    ui.start("#firebaseui-auth-container", uiConfig);
+    firebase.auth().signInWithPopup(providers[provider]);
   }
 
   handleFileChange(files) {

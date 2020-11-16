@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-navigation">
+  <div class="h-full w-full">
     <Collaborate></Collaborate>
   </div>
 </template>
