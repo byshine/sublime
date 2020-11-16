@@ -11,12 +11,6 @@ const routes = [
     component: Home
   },
   {
-    path: "/photography",
-    name: "Photography",
-    component: () =>
-      import(/* webpackChunkName: "photography" */ "../views/Photography.vue")
-  },
-  {
     path: "/collaborate",
     name: "Collaborate",
     component: () =>
