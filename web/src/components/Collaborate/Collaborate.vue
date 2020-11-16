@@ -1,5 +1,5 @@
 <template>
-  <div class="text-white p-10 flex justify-center flex-col items-center">
+  <div class="text-black p-10 flex justify-center flex-col items-center">
     <button @click="handleAuth">Sign In</button>
     <div id="firebaseui-auth-container"></div>
     <transition

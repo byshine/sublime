@@ -24,6 +24,9 @@
         <li>
           <router-link to="/gallery">Gallery</router-link>
         </li>
+        <li>
+          <router-link to="/collaborate">Collaborate</router-link>
+        </li>
       </ul>
     </div>
   </div>

@@ -8,7 +8,7 @@
       multiple
       @change="handleFileChange"
     />
-    <div class="shadow-lg" style="width: 500px;">
+    <div class="border border-dashed border-black" style="width: 500px;">
       <div
         id="dropArea"
         class="bg-white text-black p-2  flex justify-center items-center rounded-t-lg cursor-pointer py-20"
@@ -18,14 +18,10 @@
         @drop.prevent.stop="handleDrop"
         ref="dropArea"
       >
-        <span class="font-regular text-white font-serif tracking-normal text-xl"
+        <span
+          class="font-regular text-font-main font-serif tracking-normal text-xl"
           >Drop Images</span
         >
-      </div>
-      <div
-        class="bg-input-bg text-center flex justify-center align-center py-10 rounded-b-lg"
-      >
-        Supported Format: jpeg, jpg
       </div>
     </div>
   </div>
@@ -54,14 +50,3 @@ export default class SublimeUploader extends Vue {
   }
 }
 </script>
-
-<style scoped>
-#dropArea {
-  background: rgb(34, 193, 195);
-  background: linear-gradient(
-    0deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  );
-}
-</style>

@@ -10,6 +10,7 @@ const os = require('os');
 const fs = require('fs');
 const Busboy = require('busboy');
 app.use(cors({ origin: true }));
+const uid= require('uid');
 
 const {Storage} = require('@google-cloud/storage')
 const storage = new Storage();
@@ -24,6 +25,14 @@ app.get('/photos', async (req, res) => {
   const photos = await firestore.collection('photos').get()
   return res.send(photos.docs.map(doc => doc.data()))
 })
+
+
+
+function appendToFilename(filename, string){
+    var dotIndex = filename.lastIndexOf(".");
+    if (dotIndex == -1) return filename + string;
+    else return filename.substring(0, dotIndex) + string + filename.substring(dotIndex);
+} 
 
 app.post('/collaborate', (req, res) => {
 
@@ -43,7 +52,8 @@ app.post('/collaborate', (req, res) => {
       
         busboy.on('file', (fieldname, file, filename) => {
           console.log(`Processed file ${filename}`);
-          const filepath = path.join(tmpdir, filename);
+          const id = uid.uid()
+          const filepath = path.join(tmpdir, appendToFilename(filename, `_${id}`) );
           uploads[fieldname] = {
               filepath,
               filename
@@ -70,51 +80,44 @@ app.post('/collaborate', (req, res) => {
         // We still need to wait for the disk writes (saves) to complete.
         busboy.on('finish', async () => {
           await Promise.all(fileWrites);
-          for (const file in uploads) {
-            const filePath = uploads[file].filepath
-            const fileName = uploads[file].filename
-            const destPathOriginal = 'images/original/' + fileName
-            const destPathOptimized = 'images/optimized/' + fileName
 
-            const filepaths = [
-              filePath,
-              filePath.replace(/(\.[\w\d_-]+)$/i, '_small$1'),
-              filePath.replace(/(\.[\w\d_-]+)$/i, '_medium$1'),
-              filePath.replace(/(\.[\w\d_-]+)$/i, '_large$1')
-            ]
+          const { filename, filepath } = uploads.file;
+          
+          const filepaths = [
+            filepath,
+            appendToFilename(filepath, `_small`),
+            appendToFilename(filepath, `_medium`),
+            appendToFilename(filepath, `_large`)              
+          ]
 
-            try {
-            
-              await Promise.all([
-                optimizeImage(filePath, filepaths[1], 416),
-                optimizeImage(filePath, filepaths[2], 600),
-                optimizeImage(filePath, filepaths[3], 800)
-              ])
+          await Promise.all([
+            optimizeImage(filepath, filepaths[1], 416),
+            optimizeImage(filepath, filepaths[2], 600),
+            optimizeImage(filepath, filepaths[3], 800)
+          ]) 
+        
+          const uploadResults = await Promise.all([
+            bucket.upload(filepaths[0]),
+            bucket.upload(filepaths[1]),
+            bucket.upload(filepaths[2]),
+            bucket.upload(filepaths[3])
+          ])
 
-              const uploadResults = await Promise.all([
-                bucket.upload(filepaths[0]),
-                bucket.upload(filepaths[1]),
-                bucket.upload(filepaths[2]),
-                bucket.upload(filepaths[3])
-              ])
+          fields.original = uploadResults[0][1].name
+          fields.small = uploadResults[1][1].name
+          fields.medium = uploadResults[2][1].name
+          fields.large = uploadResults[3][1].name
 
-              fields.original = uploadResults[0][1].name
-              fields.small = uploadResults[1][1].name
-              fields.medium = uploadResults[2][1].name
-              fields.large = uploadResults[3][1].name
+          await firestore.collection('photos').add(fields, { merge: true });
+               
 
-              await firestore.collection('photos').add(fields, { merge: true });
+          for (let i = 0; i < filepaths.length; i++) {
+              fs.unlinkSync(filepaths[i]);
+          }
 
-            } catch(e) {
-              console.error(e)
-            } finally {
-              filepaths.map(fp => {
-                fs.unlinkSync(fp);
-              })
-            }
+          return res.send();
+        });
 
-          res.send();
-        }});
         busboy.end(req.rawBody);
 })
 

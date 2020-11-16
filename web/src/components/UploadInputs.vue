@@ -9,12 +9,12 @@
         <select
           v-model="f.model"
           v-if="f.value === 'country'"
-          class="w-full block py-3 px-2 text-white placeholder-white text-xs tracking-widest appearance-none bg-transparent border-b border-white-shade border-solid
+          class="w-full block py-3 px-2 text-font-main placeholder-text-font-main text-xs tracking-widest appearance-none bg-transparent border-b border-white-shade border-solid
             "
         >
           <option value="placeholder">Country</option>
           <option
-            class="text-black "
+            class="text-font-main"
             v-for="country in countries"
             :key="country.name"
             :value="country.name"
@@ -25,7 +25,7 @@
           v-else
           v-model="f.model"
           name="Text"
-          class="w-full block bg-transparent py-3 px-2 text-white placeholder-white text-xs tracking-widest border-b border-white-shade border-solid"
+          class="w-full block bg-transparent py-3 px-2 text-font-mainplaceholder-text-font-main text-xs tracking-widest border-b border-white-shade border-solid"
           type="text"
           :placeholder="f.placeholder"
         />
