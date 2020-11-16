@@ -291,7 +291,6 @@ module.exports = {
       ],
       serif: [
         "Gilda Display",
-        "Amiri",
         "Georgia",
         "Cambria",
         '"Times New Roman"',

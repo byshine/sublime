@@ -14,7 +14,7 @@
         @click.native="$emit('openMenu')"
       ></Hamburger>
 
-      <ul class="nav:mt-10 hidden nav:block">
+      <ul class="nav:mt-10 hidden nav:block text-center">
         <li>
           <router-link to="/">Home</router-link>
         </li>
@@ -23,6 +23,15 @@
         </li>
         <li>
           <router-link to="/gallery">Gallery</router-link>
+        </li>
+        <li class="mt-5 text-center">
+          <a class="inline-block" href="https://instagram.com/classicstyle">
+            <img
+              :src="require('@/assets/instagram.svg')"
+              width="25"
+              class="inline-block"
+            />
+          </a>
         </li>
       </ul>
     </div>

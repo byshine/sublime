@@ -109,7 +109,12 @@ export default class Collaborate extends Vue {
     this.files = files;
   }
 
-  submitRequest() {
+  async submitRequest() {
+    if (!this.user || !this.validated) {
+      console.error("User does not exist or isn't validated");
+      return;
+    }
+
     const uploadCards = this.$refs.uploadCard;
     const requests = [];
     for (let i = 0; i < uploadCards.length; i++) {
@@ -119,6 +124,9 @@ export default class Collaborate extends Vue {
       form.map(f => formData.append(f.value, f.model));
       requests.push(collaborate(formData));
     }
+
+    const result = await Promise.all(requests);
+    console.log("Results", result);
 
     /*
     const formData = new FormData();
