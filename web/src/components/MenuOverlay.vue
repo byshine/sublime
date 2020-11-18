@@ -4,6 +4,14 @@
     :class="{ 'translate-y-0': menu, '-translate-y-full': !menu }"
   >
     <ul class="text-font-main text-center" @click="$emit('close')">
+      <li>
+        <router-link to="/" class="inline-block text-center mb-10">
+          <img
+            :src="require('@/assets/logo.svg')"
+            class="w-10 h-10 inline-block"
+          />
+        </router-link>
+      </li>
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/about">About</router-link></li>
       <li><router-link to="/gallery">Gallery</router-link></li>
