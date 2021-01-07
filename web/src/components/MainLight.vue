@@ -19,17 +19,13 @@
       class="flex justify-center items-center w-full h-full flex-col text-font-main relative z-30 p-10"
     >
       <blockquote class="w-full max-w-3xl relative rounded-lg text-white">
-        <p class="md:text-lg sm:text-md">
-          Don't hope for better, Just be better <br />
-          Be something better. Be more compassionate, more resilient, more
-          humble, more disciplined. <br />
-          Many people would also throw in there "Be more human," but no-be a
-          better human.<br />
-          And maybe if we're lucky, one day we'll get to be more than human.<br />
+        <p class="text-center md:text-lg sm:text-md">
+          2021 Exhibition
+          <br />
+          <span class="font-bold">Vancouver</span>
+          <br />
+          <span class="inline-block mt-10">In Production</span>
         </p>
-        <footer class="float-right mt-5">
-          - <cite>Everything is f**cked</cite>
-        </footer>
       </blockquote>
     </div>
   </div>

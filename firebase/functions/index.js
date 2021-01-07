@@ -25,6 +25,7 @@ app.get('/photos', async (req, res) => {
   const photos = await firestore.collection('photos').get()
   return res.send(photos.docs.map(doc => doc.data()))
 })
+<<<<<<< Updated upstream
 
 
 
@@ -34,8 +35,11 @@ function appendToFilename(filename, string){
     else return filename.substring(0, dotIndex) + string + filename.substring(dotIndex);
 } 
 
+=======
+/*
+>>>>>>> Stashed changes
 app.post('/collaborate', (req, res) => {
-
+        
         const busboy = new Busboy({headers: req.headers});
         const tmpdir = os.tmpdir();
       
@@ -80,6 +84,7 @@ app.post('/collaborate', (req, res) => {
         // We still need to wait for the disk writes (saves) to complete.
         busboy.on('finish', async () => {
           await Promise.all(fileWrites);
+<<<<<<< Updated upstream
 
           const { filename, filepath } = uploads.file;
           
@@ -118,8 +123,56 @@ app.post('/collaborate', (req, res) => {
           return res.send();
         });
 
+=======
+          for (const file in uploads) {
+            const filePath = uploads[file].filepath
+            const fileName = uploads[file].filename
+            const destPathOriginal = 'images/original/' + fileName
+            const destPathOptimized = 'images/optimized/' + fileName
+
+            const filepaths = [
+              filePath,
+              filePath.replace(/(\.[\w\d_-]+)$/i, '_small$1'),
+              filePath.replace(/(\.[\w\d_-]+)$/i, '_medium$1'),
+              filePath.replace(/(\.[\w\d_-]+)$/i, '_large$1')
+            ]
+
+            try {
+            
+              await Promise.all([
+                optimizeImage(filePath, filepaths[1], 416),
+                optimizeImage(filePath, filepaths[2], 600),
+                optimizeImage(filePath, filepaths[3], 800)
+              ])
+
+              const uploadResults = await Promise.all([
+                bucket.upload(filepaths[0]),
+                bucket.upload(filepaths[1]),
+                bucket.upload(filepaths[2]),
+                bucket.upload(filepaths[3])
+              ])
+
+              fields.original = uploadResults[0][1].name
+              fields.small = uploadResults[1][1].name
+              fields.medium = uploadResults[2][1].name
+              fields.large = uploadResults[3][1].name
+
+              await firestore.collection('photos').add(fields, { merge: true });
+
+            } catch(e) {
+              console.error(e)
+            } finally {
+              filepaths.map(fp => {
+                fs.unlinkSync(fp);
+              })
+            }
+
+          res.send();
+          }});
+>>>>>>> Stashed changes
         busboy.end(req.rawBody);
 })
+*/
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions

@@ -32,7 +32,7 @@
           <router-link to="/about">About</router-link>
         </li>
         <li>
-          <router-link to="/gallery">Gallery</router-link>
+          <router-link to="/gallery">Exhibitions</router-link>
         </li>
         <li class="mt-5 text-center">
           <a class="inline-block" href="https://instagram.com/classicstyle">
